@@ -9,31 +9,31 @@ using namespace std;
 
 int main(){
 	// Creation of ifstream class object to read the file 
-    ifstream fin; 
+	ifstream fin; 
+
+	// Destination string of getline function
+	string line;
     
-    // Destination string of getline function
-    string line;
+	// Vector to store individual lines of the file
+	vector<string> my_file_vectorized;
+
+	// Opening the file
+	fin.open("Matthew C.txt"); 
+
+	// Execute a loop until end of file 
+	while (fin) { 
+
+	// Read a Line from File 
+	getline(fin, line); 
+
+	// Store lines from file in vector 
+	my_file_vectorized.push_back(line);
+	} 
     
-    // Vector to store individual lines of the file
-    vector<string> my_file_vectorized;
-  
-    // Opening the file
-    fin.open("Matthew C.txt"); 
-    
-    // Execute a loop until end of file 
-    while (fin) { 
-  
-        // Read a Line from File 
-        getline(fin, line); 
-  
-        // Store lines from file in vector 
-        my_file_vectorized.push_back(line);
-    } 
-    
-    // Close the file 
-    fin.close(); 
-    
-    // Test to check encrypted file stored properly
+	// Close the file 
+	fin.close(); 
+
+	// Test to check encrypted file stored properly
 	cout << "Testing Encrypted" << endl;
 	for(int i = 0; i < 50; i++){
 		cout << my_file_vectorized[i] << endl;
@@ -52,10 +52,10 @@ int main(){
 	// Loop over alphabet
 	for(int i = 0; i < 26; i++){
 		int count = 0;
-		
+
 		// Loop over vectorized file
 		for(int j = 0; j < my_file_vectorized.size(); j++){
-			
+
 			// Loop on string of individual line
 			for(int k = 0; k < my_file_vectorized[j].length(); k++){
 				if(my_file_vectorized[j].at(k) == my_alphabet[i]){ 
@@ -63,7 +63,7 @@ int main(){
 				}
 			}
 		}
-		
+
 		my_alphabet_counts[i] = count;
 		total_char_count += count;
 		cout << my_alphabet[i] << " count is:" << my_alphabet_counts[i] << endl;
@@ -94,10 +94,10 @@ int main(){
 	}
 	
 	// Key for decryption calculated based on known frequencies
-    char my_decryption_key[26] = {'A','U','X','H','K','O','P','F','W','E','Q','I','J','Z','V','Y','L','C','N','T','B','R','S','M','G','D'};
+	char my_decryption_key[26] = {'A','U','X','H','K','O','P','F','W','E','Q','I','J','Z','V','Y','L','C','N','T','B','R','S','M','G','D'};
     
 	// My alphabet for side by side reference
-  	//		char my_alphabet[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+  	//	char my_alphabet[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 	
 	// 2D vector to keep track of changed values so they are not changed again
 	vector< vector<int> > value_changed;
@@ -126,7 +126,6 @@ int main(){
 			for(int k = 0; k < my_file_vectorized[j].length(); k++){
 				if(my_file_vectorized[j].at(k) == my_alphabet[i] && value_changed[j][k] == 0){ 
 					my_file_vectorized[j].replace(k, 1, string(1,my_decryption_key[i])) ;
-					//my_file_vectorized[j].at(k) = my_decryption_key[i];
 					value_changed[j][k] = 1;
 				}
 			}
@@ -155,21 +154,21 @@ int main(){
 	*/
 	
 	// Writing decrypted file to Matthew C Decrypted.txt
-    ofstream fout; 
-    
-    fout.open("Matthew C Decrypted.txt");
-    
-    // Execute a loop If file successfully opened
-	int my_index = 0; 
-    while (fout && my_index < my_file_vectorized.size()) { 
+	ofstream fout; 
 
-        // Write line in file 
-        fout << my_file_vectorized[my_index] << endl; 
-        my_index++;
-    } 
-  
-    // Close the File 
-    fout.close(); 
+	fout.open("Matthew C Decrypted.txt");
+
+	// Execute a loop If file successfully opened
+	int my_index = 0; 
+	while (fout && my_index < my_file_vectorized.size()) { 
+
+		// Write line in file 
+		fout << my_file_vectorized[my_index] << endl; 
+		my_index++;
+	} 
+
+	// Close the File 
+	fout.close(); 
 
 	return 0;
 }
